@@ -1,34 +1,177 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Next Auth Setup
 
-## Getting Started
+1.  app/api/[...nextauth]/route
 
-First, run the development server:
+Basic Example
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+import type { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+export const authOptions: NextAuthOptions = {
+session: {
+strategy: "jwt",
+},
+providers: [
+CredentialsProvider({
+name: "Sign in",
+credentials: {
+email: {
+label: "Email",
+type: "email",
+placeholder: "example@example.com",
+},
+password: { label: "Password", type: "password" },
+},
+async authorize(credentials) {
+const user = { id: "1", name: "Admin", email: "admin@admin.com" };
+return user;
+},
+}),
+],
+};
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2.  Add env variables in .env.local
 
-## Learn More
+NEXTAUTH_SECRET=secret
+NEXTAUTH_URL = 
 
-To learn more about Next.js, take a look at the following resources:
+3.  Now you can go to  to check if the sign up works
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4.  You can get Session data in your page.tsx or layout.tsx using this:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 
-## Deploy on Vercel
+const fetchProjects = async () => {
+const projects = await prisma.project.findMany();
+return projects;
+};
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export default async function Home() {
+const projects = await fetchProjects();
+const session = await getServerSession(authOptions);
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+return (
+
+{JSON.stringify(session)}
+
+
+);
+}
+
+5.  Get your session data to your /api using this app/api/route.ts:
+    note: this is fetching session data serverside
+
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
+import {authOptions} from "./auth/[...nextauth]/route"
+
+export async function GET(request:Request){
+const session = await getServerSession(authOptions)
+console.log('get api:', session);
+
+    return NextResponse.json({authenticated: !!session})
+
+}
+
+6.  Get session data using client side
+    Create a context provider
+
+    /app/provider.tsx
+
+    "use client";
+    import React from "react";
+    import { SessionProvider } from "next-auth/react";
+
+    type Props = {
+    children: React.ReactNode;
+    };
+
+    export const Provider = ({ children }: Props) => {
+    return  {children};
+    };
+
+    Wrap rootlayout within context provider
+    {children}
+
+    Make client component to show session data like this:
+    "use client";
+    import { useSession } from "next-auth/react";
+    import React from "react";
+
+    export default function Clientsession() {
+    const { data: session } = useSession();
+    return 
+{JSON.stringify(session)}
+;
+    }
+
+7.  Prisma seed database(add a record manually, you are going to need this first for your authentication).
+
+    add the following script to your package.json
+    "prisma": {
+    "seed": "ts-node --compiler-options {"module":"CommonJS"} prisma/seed.ts"
+    },
+    create a new file called seed.ts in prisma folder.
+    /prisma/seed.ts
+    import { PrismaClient } from '@prisma/client'
+    import { hash } from 'bcrypt'
+
+          const prisma = new PrismaClient()
+          async function main() {
+
+
+          const password = await hash('test', 12) as any;
+
+          const bob = await prisma.user.upsert({
+            where:{email:'bob@bobthegreatestalive.com'},
+            update:{},
+            create:{
+              email:'bob@bobthegreatestalive.com',
+              name:"bob",
+              password
+            }
+          })
+            console.log({bob});
+
+          }
+          main()
+            .then(async () => {
+              await prisma.$disconnect()
+            })
+            .catch(async (e) => {
+              console.error(e)
+              await prisma.$disconnect()
+              process.exit(1)
+            })
+
+         run command npx prisma db seed(u should already have a table created in the db for this, run npx prisma db push if your database isnt updated)
+
+8.  Now that you have added a user to your database, create the authentication process in /app/api/[...nextauth]/route.
+
+async authorize(credentials) {
+        if(!credentials?.email || !credentials.password){
+          return null
+        }
+        const user = await prisma.user.findUnique({
+          where:{
+            email: credentials.email
+          }
+        });
+        if (!user) {
+          return null
+        }
+        const isPasswordValid = await compare(credentials.password, user.password);
+        if (!isPasswordValid) {
+          return null
+        }
+        return{
+          id: user.id + '',
+          email:user.email,
+          name:user.name
+        }
+      },

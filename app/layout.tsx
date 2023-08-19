@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Provider } from "./providers";
 import Navbar from "../components/Navbar";
+import "@uploadthing/react/styles.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Provider>
-          <Navbar />
+          {/* <Navbar /> */}
           {children}
         </Provider>
       </body>

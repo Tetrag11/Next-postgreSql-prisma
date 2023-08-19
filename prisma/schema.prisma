@@ -25,4 +25,24 @@ model user {
   name      String   @db.VarChar(255)
   email     String   @unique
   password  String
+  posts     Post[]
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String
+  createdAt   DateTime @default(now())
+  author      user     @relation(fields: [authorEmail], references: [email])
+  authorEmail String
+  public      Boolean  @default(false)
+  media       Media[]
+}
+
+model Media {
+  id     Int    @id @default(autoincrement())
+  url    String
+  key    String
+  post   Post   @relation(fields: [postId], references: [id])
+  postId Int
 }

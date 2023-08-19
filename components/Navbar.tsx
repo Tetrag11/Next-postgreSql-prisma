@@ -7,12 +7,18 @@ import { getServerSession } from "next-auth";
 export default async function Navbar() {
   const session = await getServerSession(authOptions);
   return (
-    <div className="flex w-full justify-between max-w-screen-lg mx-auto">
+    <div className="flex w-full justify-between max-w-screen-lg mx-auto py-10 sticky">
       <Link href={"/"}>
         <h1>HomePage</h1>
       </Link>
       <ul className="flex gap-3">
-        <li>{!session?.user && <Link href={"/register"}>Sign Up</Link>}</li>
+        <li>
+          {!session?.user && (
+            <Link className="text-lg" href={"/register"}>
+              Sign Up
+            </Link>
+          )}
+        </li>
 
         <li>
           <LoginLogout session={session} />

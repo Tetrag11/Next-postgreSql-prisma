@@ -9,6 +9,7 @@ export default function LoginLogout({ session }: any) {
         onClick={() => {
           signOut();
         }}
+        className="text-lg"
       >
         Logout
       </button>
@@ -19,6 +20,7 @@ export default function LoginLogout({ session }: any) {
         onClick={() => {
           signIn();
         }}
+        className="text-lg"
       >
         Sign In
       </button>

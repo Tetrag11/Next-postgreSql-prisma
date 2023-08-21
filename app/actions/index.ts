@@ -1,9 +1,10 @@
 "use server"
 
-import { redirect } from "next/dist/server/api-utils";
+
 import prisma from "../../prisma/index";
 import { hash } from 'bcrypt'
 import { utapi } from "uploadthing/server";
+import { useRouter } from 'next/navigation'
 
 
 export const createProject = async (data: FormData) => {
@@ -121,7 +122,7 @@ export const createPost = async (content: any, title: any, urls: any, email: any
         )
       );
   
-    return('New post and media created:'+ newPost + mediaRecords);
+    return(true);
     } catch (error) {
         console.error('Error creating post:', error);
     }finally{
@@ -134,10 +135,124 @@ export const createPost = async (content: any, title: any, urls: any, email: any
 }
 
 
+export const getPosts = async(userEmail:any) =>{
+    if (userEmail !== null) {
+        const userPostsWithMedia = await prisma.user.findUnique({
+          where: { email: userEmail },
+          select: {
+            id: true,
+            createdAt: true,
+            name: true,
+            email: true,
+            posts: {
+              select: {
+                id: true,
+                title: true,
+                content: true,
+                createdAt: true,
+                authorEmail: true,
+                public: true,
+                media: {
+                  select: {
+                    id: true,
+                    url: true,
+                    key: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+    
+        return userPostsWithMedia;
+      }
+}
 
 
+export const deletePost = async (postId:number) =>{
+   if (postId !== null) {
+    const deletePost = await prisma.post.findUnique({
+        where: {id: postId},
+        include:{
+            media:true
+        }
 
+    });
+    if(deletePost){
+        for(const media of deletePost.media){
+            if (media.key) {
+                await utapi.deleteFiles(media.key);
+                await prisma.media.delete({
+                    where: { id: media.id },
+                  });
+            }
+          
+        }
 
+        await prisma.post.delete({
+            where: { id: postId },
+          });
+          return true;
+    }else{
+        return true;
+    }
+   
+   }
+}
+
+export const deleteAllPosts =async (userEmail:string) => {
+     // Find the user by their email
+const userToDelete = await prisma.user.findUnique({
+    where: { email: userEmail },
+    include:{
+        posts:true
+    }
+  });
+  
+  if (userToDelete) {
+    // Iterate through the user's posts and delete each post along with its media
+    for (const post of userToDelete.posts) {
+      // Delete associated media for the post
+    //   for (const media of post.media) {
+    //     await prisma.media.delete({
+    //       where: { id: media.id },
+    //     });
+    //   }
+//    await prisma.media.delete({
+//         where:{id:post.id}
+//     })
+  
+//       // Delete the post itself
+//       await prisma.post.delete({
+//         where: { id: post.id },
+//       });
+const deletePost = await prisma.post.findUnique({
+    where: {id: post.id},
+    include:{
+        media:true
+    }
+
+});
+if(deletePost){
+    await prisma.media.deleteMany({
+        where:{id: deletePost.id},
+    })
+
+    await prisma.post.delete({
+        where: { id: post.id },
+      });
+      return true;
+}else{
+    return true;
+}
+
+    }
+  
+    console.log(`All posts of user along with associated media deleted.`);
+  } else {
+    console.log(`User with email not found.`);
+  }
+}
 
 
 

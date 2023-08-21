@@ -8,19 +8,27 @@ import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { data } from "autoprefixer";
 import Email from "next-auth/providers/email";
+import { Result } from "postcss";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [url, setUrl] = useState<any>([]);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const [reload, setReload] = useState(false);
+  if (reload) {
+    const router = useRouter();
+    router.push("/dashboard");
+  }
 
   const [msg, setMsg] = useState<any>("");
   const { data: session } = useSession();
   const email = session?.user?.email;
 
   async function createPostClient(urls: any) {
-    const tempmsg = await createPost(content, title, urls, email);
-    setMsg(tempmsg);
+    const tempmsg = (await createPost(content, title, urls, email)) as any;
+    setReload(tempmsg);
   }
 
   return (
@@ -52,6 +60,9 @@ export default function Page() {
         <main className="flex  flex-col items-center justify-between p-24">
           <UploadDropzone<OurFileRouter>
             endpoint="imageUploader"
+            onUploadProgress={() => {
+              console.log("hello");
+            }}
             onClientUploadComplete={(res) => {
               // Do something with the response
 

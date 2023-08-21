@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Provider } from "./providers";
 import Navbar from "../components/Navbar";
 import "@uploadthing/react/styles.css";
+import StarterAnimation from "@/components/StarterAnimation";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +20,13 @@ export default async function RootLayout({
       <body>
         <Provider>
           {/* <Navbar /> */}
-          {children}
+          <div className="w-full h-full relative">
+            {/* <StarterAnimation /> */}
+            <div className="relative top-0 left-0 w-full h-full">
+              <Navbar />
+              {children}
+            </div>
+          </div>
         </Provider>
       </body>
     </html>

@@ -14,12 +14,5 @@ const fetchProjects = async () => {
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  return (
-    <div className="w-full h-full relative">
-      <StarterAnimation />
-      <div className="relative top-0 left-0 w-full h-full">
-        <Navbar />
-      </div>
-    </div>
-  );
+  return <div className="w-full h-full relative">page</div>;
 }

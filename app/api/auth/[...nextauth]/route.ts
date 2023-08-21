@@ -43,6 +43,12 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token }) {
+      token.isAdmin = true;
+      return token;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

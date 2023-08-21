@@ -17,8 +17,8 @@ export default function Page() {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [reload, setReload] = useState(false);
+  const router = useRouter();
   if (reload) {
-    const router = useRouter();
     router.push("/dashboard");
   }
 

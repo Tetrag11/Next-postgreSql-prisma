@@ -1,8 +1,10 @@
 "use client";
 import { deleteAllPosts, deletePost, getPosts } from "@/app/actions";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function PostsGallery({ posts, userEmail }: any) {
+  const router = useRouter();
   if (posts) {
     return (
       <div>
@@ -20,8 +22,9 @@ export default function PostsGallery({ posts, userEmail }: any) {
               <h2>{post.title}</h2>
               <p>{post.content}</p>
               <button
-                onClick={() => {
-                  deletePost(post.id);
+                onClick={async () => {
+                  await deletePost(post.id);
+                  window.location.reload();
                 }}
                 className="py-2 px-3 bg-red-500 w-fit"
               >

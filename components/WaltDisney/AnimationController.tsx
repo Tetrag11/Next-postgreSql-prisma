@@ -10,9 +10,16 @@ export default function AnimationController({ children }: any) {
   const [x, setX] = useState(false);
   const [y, setY] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [mouseExit, setMouseExit] = useState(false);
+  const [mouseEnter, setMouseEnter] = useState(false);
   const container = useRef(null);
   const finn = useRef(null);
   const jake = useRef(null);
+  const bemo = useRef(null);
+
+  const share = useRef(null);
+  const explore = useRef(null);
+  const create = useRef(null);
 
   const calculateBackgroundColor = (xPosition: any, background: boolean) => {
     if (background) {
@@ -50,17 +57,22 @@ export default function AnimationController({ children }: any) {
   const calculatePerspective = (
     x: any,
     y: any,
-    container: any,
+
     finn: any,
     jake: any,
+    bemo: any,
     human: boolean
   ) => {
-    if (finn.current && jake.current) {
+    if (finn.current && jake.current && bemo.current) {
       if (human) {
         let finnInfo = finn.current.getBoundingClientRect();
+        let bemoInfo = bemo.current.getBoundingClientRect();
 
         let calcX = -(y - finnInfo.y - finnInfo.height / 2) / constrain;
         let calcY = (x - finnInfo.x - finnInfo.width / 2) / constrain;
+
+        let centery = -(y - bemoInfo.y - bemoInfo.height / 2) / constrain;
+        let centerx = (x - bemoInfo.x - bemoInfo.width / 2) / constrain;
 
         return (
           "perspective(100px) " +
@@ -84,21 +96,53 @@ export default function AnimationController({ children }: any) {
           "deg) " +
           "   rotateY(" +
           calcY +
-          "deg) "
+          "deg) " +
+          "scale(80%)"
         );
       }
     }
   };
 
-  const moveFinn = {
-    transform: calculatePerspective(x, y, container, finn, jake, true),
+  const calculateMoveText = (x: any, y: any, ref: any, constrain: any) => {
+    if (ref.current) {
+      let refInfo = ref.current.getBoundingClientRect();
 
+      let calcX = (y - refInfo.y - refInfo.height / 2) / constrain;
+      let calcY = (x - refInfo.x - refInfo.width / 2) / constrain;
+
+      return "translateX(" + calcY * 10 + "px)";
+    }
+  };
+
+  const moveTextShare = {
+    transform: calculateMoveText(x, y, share, 500),
+    transition: "all 0.6s ease-out",
+    config: { tension: 200, friction: 20 },
+  };
+
+  const moveFinn = {
+    transform: calculatePerspective(x, y, finn, jake, bemo, true),
+    transition: "all 0.6s ease-out",
+    config: { tension: 200, friction: 20 },
+  };
+
+  const stayFinn = {
+    transform:
+      "perspective(100px) translateX(0) translateY(0) rotateX(0) rotateY(0)",
+    transition: "all 0.6s ease-out",
+    config: { tension: 200, friction: 20 },
+  };
+
+  const stayJake = {
+    transform:
+      "perspective(100px) translateX(0) translateY(0) rotateX(0) rotateY(0) scale(80%)",
+    transition: "all 0.6s ease-out",
     config: { tension: 200, friction: 20 },
   };
 
   const moveJake = {
-    transform: calculatePerspective(x, y, container, finn, jake, false),
-
+    transform: calculatePerspective(x, y, finn, jake, bemo, false),
+    transition: "all 0.6s ease-out",
     config: { tension: 200, friction: 20 },
   };
 
@@ -109,13 +153,24 @@ export default function AnimationController({ children }: any) {
         setX,
         y,
         setY,
+        setMouseExit,
+        mouseExit,
         backgroundAnimation,
         foregroundAnimation,
         finn,
         jake,
+        bemo,
+        share,
+        explore,
+        create,
         container,
         moveFinn,
         moveJake,
+        stayFinn,
+        stayJake,
+        mouseEnter,
+        setMouseEnter,
+        moveTextShare,
       }}
     >
       {children}

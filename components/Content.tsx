@@ -10,7 +10,7 @@ export default function Content({ children, session }: any) {
   const background = context.backgroundAnimation;
   return (
     <animated.div style={background} className="w-full h-full relative">
-      {/* <StarterAnimation /> */}
+      <StarterAnimation />
       <div className="relative top-0 left-0 w-full h-full  ">
         <Navbar />
         {children}

@@ -26,6 +26,7 @@ model user {
   email     String   @unique
   password  String
   posts     Post[]
+  avatar    Json     @default("{}")
 }
 
 model Post {

@@ -1,21 +1,32 @@
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import LoginLogout from "./Authentication/LoginLogout";
-import { authOptions } from "../app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
+import AnimationContext from "./WaltDisney/AnimationContext";
+import { animated } from "@react-spring/web";
 
-export default async function Navbar() {
-  const session = await getServerSession(authOptions);
+export default function Navbar() {
+  const { data: session } = useSession();
+  const context = useContext(AnimationContext) as any;
+  const foreground = context.foregroundAnimation;
+
   return (
-    <div className="flex w-full justify-between max-w-screen-lg mx-auto py-10 sticky">
-      <Link href={"/"}>
-        <h1>HomePage</h1>
+    <animated.div
+      style={foreground}
+      className="flex w-full justify-between items-center   py-4 px-10 shadow-lg sticky mb-[2px] border-b-[1px]"
+    >
+      <Link href={"/"} className="text-lg">
+        <animated.h1 style={foreground} className="font-semibold">
+          Social<span className="pl-1 text-3xl font-bold">X</span>
+        </animated.h1>
       </Link>
       <ul className="flex gap-3">
         <li>
           {!session?.user && (
-            <Link className="text-lg" href={"/register"}>
-              Sign Up
+            <Link href={"/register"}>
+              <animated.span style={foreground} className="text-lg">
+                Sign Up
+              </animated.span>
             </Link>
           )}
         </li>
@@ -24,6 +35,6 @@ export default async function Navbar() {
           <LoginLogout session={session} />
         </li>
       </ul>
-    </div>
+    </animated.div>
   );
 }

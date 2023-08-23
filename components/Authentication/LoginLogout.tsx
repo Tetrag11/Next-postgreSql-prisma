@@ -1,14 +1,25 @@
 "use client";
 import { signOut, signIn } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
+import AnimationContext from "../WaltDisney/AnimationContext";
+import { animated } from "@react-spring/web";
 
 export default function LoginLogout({ session }: any) {
+  const context = useContext(AnimationContext) as any;
+  const foreground = context.foregroundAnimation;
   if (session?.user) {
     return (
       <div className="flex gap-3 items-center">
+        <Link className="text-lg" href={"/explore"}>
+          <animated.span style={foreground} className="lext-lg">
+            Explore
+          </animated.span>
+        </Link>
         <Link className="text-lg" href={"/dashboard"}>
-          Dashboard
+          <animated.span style={foreground} className="lext-lg">
+            Dashboard
+          </animated.span>
         </Link>
         <button
           onClick={() => {
@@ -16,7 +27,9 @@ export default function LoginLogout({ session }: any) {
           }}
           className="text-lg"
         >
-          Logout
+          <animated.span style={foreground} className="lext-lg">
+            Logout
+          </animated.span>
         </button>
       </div>
     );

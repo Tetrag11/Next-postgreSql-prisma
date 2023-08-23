@@ -1,18 +1,30 @@
-import prisma from "@/prisma";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import Clientsession from "../components/Clientsession";
-import UploadButtonTemplate from "../components/CloudStorage/UploadButtonTemplate";
-import StarterAnimation from "@/components/StarterAnimation";
-import Navbar from "@/components/Navbar";
+"use client";
 
-const fetchProjects = async () => {
-  const projects = await prisma.project.findMany();
-  return projects;
-};
+import Create from "@/components/Homepage/Create";
+import AnimationContext from "@/components/WaltDisney/AnimationContext";
+import { useSpring, animated } from "@react-spring/web";
+import { useState, useContext } from "react";
 
-export default async function Home() {
-  const session = await getServerSession(authOptions);
+export default function Home() {
+  const calculateBackgroundColor = (xPosition: any, background: boolean) => {
+    if (background) {
+      if (xPosition <= window.innerWidth / 2) {
+        return "white";
+      } else {
+        return "black";
+      }
+    } else {
+      if (xPosition >= window.innerWidth / 2) {
+        return "white";
+      } else {
+        return "black";
+      }
+    }
+  };
 
-  return <div className="w-full h-full relative">page</div>;
+  return (
+    <animated.div className="w-full h-full relative flex flex-col gap-10 justify-around">
+      <Create calculateBackgroundColor={calculateBackgroundColor} />
+    </animated.div>
+  );
 }

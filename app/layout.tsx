@@ -3,7 +3,12 @@ import type { Metadata } from "next";
 import { Provider } from "./providers";
 import Navbar from "../components/Navbar";
 import "@uploadthing/react/styles.css";
-import StarterAnimation from "@/components/StarterAnimation";
+import AnimationContext from "@/components/WaltDisney/AnimationContext";
+import AnimationController from "@/components/WaltDisney/AnimationController";
+import { useContext } from "react";
+import Content from "@/components/Content";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,14 +24,9 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Provider>
-          {/* <Navbar /> */}
-          <div className="w-full h-full relative">
-            {/* <StarterAnimation /> */}
-            <div className="relative top-0 left-0 w-full h-full">
-              <Navbar />
-              {children}
-            </div>
-          </div>
+          <AnimationController>
+            <Content>{children}</Content>
+          </AnimationController>
         </Provider>
       </body>
     </html>

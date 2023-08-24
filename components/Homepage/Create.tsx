@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import AnimationContext from "../WaltDisney/AnimationContext";
 
-export default function Create({ setX, calculateBackgroundColor }: any) {
+export default function Create() {
   const context = useContext(AnimationContext) as any;
   const foreground = context.foregroundAnimation;
   const moveFinn = context.moveFinn;
@@ -44,10 +44,10 @@ export default function Create({ setX, calculateBackgroundColor }: any) {
   return (
     <animated.div className="w-full h-full pt-28 " ref={container}>
       {/* made a relative wrapper, and inside it, has a relative child, which results in the parent taking the relative childs height, and then pushes the relative child down by margin-top, doing this will fix all of your height problems when dealing with absolute positions, and the parent only takes the required space  */}
-      <div className="wrapper sm:max-w-[735px] max-w-[300px]  w-full mx-auto relative flex  items-center">
+      <div className="wrapper sm:max-w-[735px] max-w-[300px]  w-full mx-auto relative flex  items-center justify-center sm:justify-start ">
         <div
           ref={bemo}
-          className="absolute bemo w-[100px] h-[100px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] pointer-events-none"
+          className="absolute bemo w-[100px] h-[100px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] pointer-events-none overflow-hidden"
         ></div>
         <animated.div
           ref={finn}
@@ -65,28 +65,28 @@ export default function Create({ setX, calculateBackgroundColor }: any) {
               ? moveJake
               : context.stayJake
           }
-          className="relative sm:w-[300px] w-[200px]  sm:h-[400px] h-[300px] border-2 border-black mt-[20%]  left-[10rem]  scale-[80%] "
+          className="relative sm:w-[300px] w-[200px]  sm:h-[400px] h-[300px] border-2 border-black mt-[20%]  sm:left-[10rem] left-[0]  scale-[80%] "
         ></animated.div>
-        <div className="absolute w-full h-full sm:top-[55%] top-[100%] translate-y-[-50%] sm:left-[45%] left-[30%]">
-          <div className="w-full h-full flex flex-col">
+        <div className="absolute w-fit h-full sm:top-[55%] top-[100%] translate-y-[-50%] sm:left-[45%] left-[30%]">
+          <div className=" flex flex-col w-fit">
             <animated.h3
               ref={share}
               style={context.moveTextShare}
-              className="sm:text-7xl text-2xl"
+              className="sm:text-7xl text-2xl w-fit"
             >
               Share,
             </animated.h3>
             <animated.h2
               ref={explore}
               style={context.moveTextShare}
-              className="sm:text-8xl text-3xl"
+              className="sm:text-8xl text-3xl w-fit"
             >
               Explore,
             </animated.h2>
             <animated.h1
               ref={create}
               style={context.moveTextShare}
-              className="sm:text-9xl text-4xl"
+              className="sm:text-9xl text-4xl w-fit"
             >
               Create,
             </animated.h1>

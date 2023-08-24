@@ -3,10 +3,12 @@ import React, { useRef } from "react";
 import { createContext, useContext, useState, useEffect } from "react";
 import AnimationContext from "./AnimationContext";
 import { useSpring } from "@react-spring/web";
+import { useMediaQuery } from "usehooks-ts";
 
-const constrain = 500;
+const constrain = 300;
 
 export default function AnimationController({ children }: any) {
+  const matches = useMediaQuery("(min-width: 768px)");
   const [x, setX] = useState(false);
   const [y, setY] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -102,6 +104,7 @@ export default function AnimationController({ children }: any) {
       }
     }
   };
+  console.log(matches);
 
   const calculateMoveText = (x: any, y: any, ref: any, constrain: any) => {
     if (ref.current) {
@@ -115,13 +118,15 @@ export default function AnimationController({ children }: any) {
   };
 
   const moveTextShare = {
-    transform: calculateMoveText(x, y, share, 500),
+    transform: matches ? calculateMoveText(x, y, share, 500) : "",
     transition: "all 0.6s ease-out",
     config: { tension: 200, friction: 20 },
   };
 
   const moveFinn = {
-    transform: calculatePerspective(x, y, finn, jake, bemo, true),
+    transform: matches
+      ? calculatePerspective(x, y, finn, jake, bemo, true)
+      : "",
     transition: "all 0.6s ease-out",
     config: { tension: 200, friction: 20 },
   };
@@ -141,7 +146,9 @@ export default function AnimationController({ children }: any) {
   };
 
   const moveJake = {
-    transform: calculatePerspective(x, y, finn, jake, bemo, false),
+    transform: matches
+      ? calculatePerspective(x, y, finn, jake, bemo, false)
+      : "",
     transition: "all 0.6s ease-out",
     config: { tension: 200, friction: 20 },
   };

@@ -30,12 +30,4 @@ export default function StarterAnimation() {
       </animated.div>
     ) : null
   );
-  // return (
-  //   <div className="w-full h-screen absolute top-0 left-0 bg-black z-50 max-w-[100dvw]">
-  //     <div className=" overflow-hidden max-h-screen h-full relative">
-  //       <div className="absolute border-2 border-white w-[250px] h-[400px] finn "></div>
-  //       <div className="absolute border-2 border-white w-[250px] h-[400px] jake "></div>
-  //     </div>
-  //   </div>
-  // );
 }

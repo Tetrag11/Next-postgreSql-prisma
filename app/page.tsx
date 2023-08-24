@@ -1,6 +1,7 @@
 "use client";
 
 import Create from "@/components/Homepage/Create";
+import Introduction from "@/components/Homepage/Introduction";
 import AnimationContext from "@/components/WaltDisney/AnimationContext";
 import { useSpring, animated } from "@react-spring/web";
 import { useState, useContext } from "react";
@@ -23,8 +24,9 @@ export default function Home() {
   };
 
   return (
-    <animated.div className="w-full h-full relative flex flex-col gap-10 justify-around">
-      <Create calculateBackgroundColor={calculateBackgroundColor} />
+    <animated.div className="w-full h-full relative flex flex-col sm:gap-36 gap-20 justify-around">
+      <Create />
+      <Introduction />
     </animated.div>
   );
 }

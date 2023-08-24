@@ -27,6 +27,7 @@ export default function Home() {
     <animated.div className="w-full h-full relative flex flex-col sm:gap-36 gap-20 justify-around">
       <Create />
       <Introduction />
+      <div>Next Section</div>
     </animated.div>
   );
 }

@@ -1,15 +1,10 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { useScroll, animated } from "@react-spring/web";
 
 export default function Introduction() {
-  const { scrollYProgress } = useScroll();
   return (
-    <animated.div
-      style={{ opacity: scrollYProgress }}
-      className="w-full h-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-10  "
-    >
+    <div className="w-full h-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-10  ">
       <div className="flex flex-col lg:items-end items-center justify-end gap-14">
         <h1 className=" sm:text-5xl  text-4xl">
           What is{" "}
@@ -67,6 +62,6 @@ export default function Introduction() {
           </ul>
         </article>
       </div>
-    </animated.div>
+    </div>
   );
 }

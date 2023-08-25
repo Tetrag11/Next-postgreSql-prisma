@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import { createContext, useContext, useState, useEffect } from "react";
 import AnimationContext from "./AnimationContext";
-import { useSpring } from "@react-spring/web";
+import { useInView, useSpring } from "@react-spring/web";
 import { useMediaQuery } from "usehooks-ts";
 
 const constrain = 300;
@@ -104,7 +104,6 @@ export default function AnimationController({ children }: any) {
       }
     }
   };
-  console.log(matches);
 
   const calculateMoveText = (x: any, y: any, ref: any, constrain: any) => {
     if (ref.current) {
@@ -153,6 +152,25 @@ export default function AnimationController({ children }: any) {
     config: { tension: 200, friction: 20 },
   };
 
+  // Scroll in view animations
+
+  const [ref, springs] = useInView(
+    () => ({
+      transition: "all 2s ease out",
+      from: {
+        opacity: 0,
+        y: 100,
+      },
+      to: {
+        opacity: 1,
+        y: 0,
+      },
+    }),
+    {
+      rootMargin: "-40% 0%",
+    }
+  );
+
   return (
     <AnimationContext.Provider
       value={{
@@ -178,6 +196,8 @@ export default function AnimationController({ children }: any) {
         mouseEnter,
         setMouseEnter,
         moveTextShare,
+        ref,
+        springs,
       }}
     >
       {children}

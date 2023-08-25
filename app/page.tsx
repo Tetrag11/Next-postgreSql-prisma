@@ -1,6 +1,7 @@
 "use client";
 
 import Create from "@/components/Homepage/Create";
+import GetStarted from "@/components/Homepage/GetStarted";
 import Introduction from "@/components/Homepage/Introduction";
 import AnimationContext from "@/components/WaltDisney/AnimationContext";
 import { useSpring, animated } from "@react-spring/web";
@@ -24,10 +25,10 @@ export default function Home() {
   };
 
   return (
-    <animated.div className="w-full h-full relative flex flex-col sm:gap-36 gap-20 justify-around">
+    <animated.div className="w-full h-full relative flex flex-col  gap-3 justify-around">
       <Create />
       <Introduction />
-      <div>Next Section</div>
+      <GetStarted />
     </animated.div>
   );
 }

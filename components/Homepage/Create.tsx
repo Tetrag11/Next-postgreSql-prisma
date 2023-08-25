@@ -42,9 +42,12 @@ export default function Create() {
   // Create a spring animation for the background color change
 
   return (
-    <animated.div className="w-full h-full pt-28 " ref={container}>
+    <animated.div
+      className="w-full h-screen pt-28  bg-white flex place-items-center "
+      ref={container}
+    >
       {/* made a relative wrapper, and inside it, has a relative child, which results in the parent taking the relative childs height, and then pushes the relative child down by margin-top, doing this will fix all of your height problems when dealing with absolute positions, and the parent only takes the required space  */}
-      <div className="wrapper sm:max-w-[735px] max-w-[300px]  w-full mx-auto relative flex  items-center justify-center sm:justify-start ">
+      <div className="wrapper sm:max-w-[735px] max-w-[300px]  w-full mx-auto relative flex  items-center justify-center sm:justify-start h-fit ">
         <div
           ref={bemo}
           className="absolute bemo w-[100px] h-[100px] left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] pointer-events-none overflow-hidden"

@@ -1,20 +1,30 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
+import { useInView, animated } from "@react-spring/web";
+import AnimationContext from "../WaltDisney/AnimationContext";
 
 export default function Introduction() {
+  const context = useContext(AnimationContext) as any;
   return (
-    <div className="w-full h-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-10  ">
+    <animated.div
+      ref={context.ref}
+      style={context.springs}
+      className="w-full  lg:h-screen h-full min-h-fit grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-10  bg-white  "
+    >
       <div className="flex flex-col lg:items-end items-center justify-end gap-14">
-        <h1 className=" sm:text-5xl  text-4xl">
+        <h1 className="2xl:text-6xl sm:text-5xl  text-4xl">
           What is{" "}
           <span className="font-semibold">
             Social
-            <span className="pl-1 sm:text-6xl text-5xl font-bold">X</span>
+            <span className="pl-1 2xl:text-7xl  sm:text-6xl text-5xl font-bold">
+              X
+            </span>
           </span>
         </h1>
+        {/* mobile */}
         <article className="max-w-[300px] md:flex flex-col gap-3 justify-center self-center lg:hidden hidden ">
-          <p className="font-semibold text-lg">
+          <p className="font-semibold text-lg ">
             The only Platform you need to share your memories to the world
           </p>
           <ul
@@ -47,8 +57,8 @@ export default function Introduction() {
         </div>
       </div>
       <div className="flex justify-start self-center md:justify-self-start justify-self-center md:hidden lg:flex">
-        <article className="max-w-[300px] flex flex-col gap-3 justify-center md:pt-20">
-          <p className="font-semibold text-lg">
+        <article className="max-w-[300px] 2xl:max-w-[350px] flex flex-col gap-3 justify-center md:pt-20">
+          <p className="font-semibold text-lg 2xl:text-2xl">
             The only Platform you need to share your memories to the world
           </p>
           <ul
@@ -56,12 +66,14 @@ export default function Introduction() {
             className="flex flex-col self-center w-fit"
             w-fit
           >
-            <li className="text-lg">Easy To use.</li>
-            <li className="text-lg">Simple Design, no complexity.</li>
-            <li className="text-lg">Secure and reliable.</li>
+            <li className="text-lg 2xl:text-xl">Easy To use.</li>
+            <li className="text-lg 2xl:text-xl">
+              Simple Design, no complexity.
+            </li>
+            <li className="text-lg 2xl:text-xl">Secure and reliable.</li>
           </ul>
         </article>
       </div>
-    </div>
+    </animated.div>
   );
 }

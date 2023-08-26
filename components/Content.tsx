@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import AnimationContext from "./WaltDisney/AnimationContext";
 import { useTransition, animated } from "@react-spring/web";
 import StarterAnimation from "./StarterAnimation";
+import Footer from "./Footer";
 
 export default function Content({ children, session }: any) {
   const context = useContext(AnimationContext) as any;
@@ -48,6 +49,7 @@ export default function Content({ children, session }: any) {
     <div className="relative top-0 left-0 w-full h-full  ">
       <Navbar />
       {children}
+      <Footer />
     </div>
   );
 }

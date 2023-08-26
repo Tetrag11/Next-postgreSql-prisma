@@ -43,7 +43,7 @@ export default function Create() {
 
   return (
     <animated.div
-      className="w-full h-screen pt-28  bg-white flex place-items-center "
+      className="w-full lg:h-screen h-full min-h-fit sm:pt-28 pt-32 bg-white flex place-items-center "
       ref={container}
     >
       {/* made a relative wrapper, and inside it, has a relative child, which results in the parent taking the relative childs height, and then pushes the relative child down by margin-top, doing this will fix all of your height problems when dealing with absolute positions, and the parent only takes the required space  */}

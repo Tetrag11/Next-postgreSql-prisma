@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <animated.div
       style={foreground}
-      className="flex w-full justify-between items-center   py-4 px-10 shadow-lg  mb-[2px] border-b-[1px] bg-white z-50 "
+      className="flex w-full justify-between items-center   py-4 px-10 border-black  mb-[2px] border-b-[1px] bg-white z-50 "
     >
       <Link href={"/"} className="text-lg">
         <animated.h1 style={foreground} className="font-semibold">

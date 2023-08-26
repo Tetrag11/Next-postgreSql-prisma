@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext } from "react";
 import Image from "next/image";
-import { useInView, animated } from "@react-spring/web";
+import { animated } from "@react-spring/web";
 import AnimationContext from "../WaltDisney/AnimationContext";
 
 export default function Introduction() {
@@ -10,9 +10,9 @@ export default function Introduction() {
     <animated.div
       ref={context.ref}
       style={context.springs}
-      className="w-full  lg:h-screen h-full min-h-fit grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-10  bg-white  "
+      className="w-full  lg:h-screen h-full min-h-fit grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-center gap-10 border-black border-t-[1px]  bg-white relative z-30 "
     >
-      <div className="flex flex-col lg:items-end items-center justify-end gap-14">
+      <div className="flex flex-col lg:items-end items-center justify-end gap-14 md:pt-0 pt-5">
         <h1 className="2xl:text-6xl sm:text-5xl  text-4xl">
           What is{" "}
           <span className="font-semibold">
@@ -38,7 +38,7 @@ export default function Introduction() {
           </ul>
         </article>
       </div>
-      <div className="flex justify-center ">
+      <div className="flex justify-center  lg:pt-0 pt-5">
         <div
           style={{ gridTemplateRows: "1fr auto" }}
           className="card w-full max-w-[320px]  h-[550px]  border-2 border-black grid p-3 gap-3"

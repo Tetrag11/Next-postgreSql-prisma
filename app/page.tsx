@@ -25,7 +25,7 @@ export default function Home() {
   };
 
   return (
-    <animated.div className="w-full h-full relative flex flex-col  gap-3 justify-around">
+    <animated.div className="w-full h-full relative flex flex-col lg:gap-0 gap-32 justify-around">
       <Create />
       <Introduction />
       <GetStarted />

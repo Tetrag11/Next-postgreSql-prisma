@@ -39,7 +39,6 @@ export default function Content({ children, session }: any) {
         ) : (
           <>
             <div className="relative top-0 left-0 w-full h-full  ">
-              <Navbar />
               {children}
             </div>
           </>

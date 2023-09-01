@@ -17,8 +17,13 @@ export default async function page() {
     );
   }
   return (
-    <div>
-      <h1>this is register</h1>
+    <div className="w-full h-screen min-h-[600px] grid md:grid-cols-2 justify-center items-center grid-cols-1 md:gap-0 gap-5">
+      <h1 className="2xl:text-[10rem] lg:text-9xl md:text-6xl sm:text-4xl text-3xl w-fit lg:justify-self-end justify-self-center">
+        Social{" "}
+        <span className="pl-1 text-4xl  2xl:text-[12rem] md:text-7xl  lg:text-[10rem] sm:text-5xl font-bold">
+          X
+        </span>
+      </h1>
       <RegisterForm />
     </div>
   );

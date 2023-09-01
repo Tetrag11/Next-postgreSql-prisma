@@ -2,44 +2,24 @@
 import { deletePost, getPosts } from "@/app/actions";
 import { useRouter } from "next/navigation";
 import React from "react";
+import Card from "./Dashboard/Card";
 
-export default function PostsGallery({ posts, userEmail }: any) {
-  const router = useRouter();
-  if (posts) {
+export default function PostsGallery({ posts }: any) {
+  console.log(posts.posts.length > 0);
+  if (posts.posts && posts.posts.length > 0) {
     return (
       <div>
-        <div className="gallery grid grid-cols-3 max-w-screen-xl mx-auto">
-          {posts.posts.map((post: any) => (
-            <div key={post.id}>
-              <h2>{post.title}</h2>
-              <p>{post.content}</p>
-              <button
-                onClick={async () => {
-                  await deletePost(post.id);
-                  window.location.reload();
-                }}
-                className="py-2 px-3 bg-red-500 w-fit"
-              >
-                Delete Post
-              </button>
-              <ul className="">
-                {post.media.map((media: any) => (
-                  <li key={media.id}>
-                    <img
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                      }}
-                      src={media.url}
-                      alt={media.key}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="w-full flex flex-wrap justify-center sm:justify-start gap-10  pt-20 mx-auto">
+          {posts.posts.map((post: any, index: any) => (
+            <Card key={index} post={post} />
           ))}
         </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <h3 className="text-lg py-10">No Posts created yet</h3>
       </div>
     );
   }

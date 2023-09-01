@@ -82,3 +82,34 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
 }
+
+.avatar-upload .upload-thing > div > div {
+  margin: 0 auto;
+}
+
+.avatar-upload .upload-thing > div {
+  align-items: start;
+  width: fit-content;
+}
+
+.avatar-upload .upload-thing > div > label {
+  background-color: black;
+  border-radius: 0;
+  width: 100%;
+}
+
+.avatar-upload .upload-thing > div > label ::after {
+  background-color: black !important;
+}
+
+.avatar-upload .upload-thing > div > label * {
+  background-color: black !important;
+}
+
+.avatar-upload .ut-bg-blue-400 .ut-bg-blue-400,
+.avatar-upload .ut-bg-blue-400 .ut-bg-blue-600 {
+  background-color: black !important;
+}
+
+.avatar-upload .upload-thing > div > label > span {
+}

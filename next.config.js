@@ -4,6 +4,16 @@ const nextConfig = {
     serverActions: true,
     serverComponentsExternalPackages: ["@prima/client", "bcrypt"],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "uploadthing.com",
+        port: "",
+        pathname: "/f/**",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

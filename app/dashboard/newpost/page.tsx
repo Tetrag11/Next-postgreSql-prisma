@@ -19,7 +19,7 @@ export default function Page() {
   const [reload, setReload] = useState(false);
   const router = useRouter();
   if (reload) {
-    router.push("/dashboard");
+    router.push("/dashboard?revalidate=true");
   }
 
   const [msg, setMsg] = useState<any>("");
@@ -32,25 +32,15 @@ export default function Page() {
   }
 
   return (
-    <div>
-      <h1>Create New Post</h1>
-      <form className="max-w-lg mx-auto flex flex-col gap-3 mt-20">
-        <input
-          type="text"
-          placeholder="Enter Title"
-          className="text-black placeholder:text-black"
-          value={title}
-          onChange={(e: any) => {
-            setTitle(e.target.value);
-          }}
-          required
-        />
+    <div className="w-full h-full py-10">
+      <form className="flex flex-col gap-5 py-5 px-5 max-w-[500px] mx-auto w-full border-2 border-black rounded-sm">
+        {msg && <h1 className="text-center">{msg}</h1>}
         <textarea
           name="content"
           cols={30}
           rows={5}
           placeholder="Content"
-          className="text-black placeholder:text-black"
+          className="text-black placeholder:text-black border border-black p-3 focus:bg-black focus:placeholder:text-white focus:text-white"
           value={content}
           onChange={(e: any) => {
             setContent(e.target.value);
@@ -81,7 +71,6 @@ export default function Page() {
               : null}
           </ul>
         </main>
-        <h1>{msg}</h1>
       </form>
     </div>
   );

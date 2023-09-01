@@ -1,8 +1,10 @@
 "use client";
 
+import Footer from "@/components/Footer";
 import Create from "@/components/Homepage/Create";
 import GetStarted from "@/components/Homepage/GetStarted";
 import Introduction from "@/components/Homepage/Introduction";
+import Navbar from "@/components/Navbar";
 import AnimationContext from "@/components/WaltDisney/AnimationContext";
 import { useSpring, animated } from "@react-spring/web";
 import { useState, useContext } from "react";
@@ -25,10 +27,14 @@ export default function Home() {
   };
 
   return (
-    <animated.div className="w-full h-full relative flex flex-col lg:gap-0 gap-32 justify-around">
-      <Create />
-      <Introduction />
-      <GetStarted />
-    </animated.div>
+    <>
+      <Navbar />
+      <animated.div className="w-full h-full relative flex flex-col lg:gap-0 gap-32 justify-around">
+        <Create />
+        <Introduction />
+        <GetStarted />
+      </animated.div>
+      <Footer />
+    </>
   );
 }

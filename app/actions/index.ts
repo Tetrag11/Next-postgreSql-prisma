@@ -30,7 +30,7 @@ export const registerUser = async (
   }
 
   if (password !== cPassword) {
-    return "passwords dont match";
+    return "Passwords dont match";
   }
 
   const exists = await prisma.user
@@ -76,7 +76,7 @@ export const createPost = async (
   urls: any,
   email: any
 ) => {
-  if (!title || !content) {
+  if (!content) {
     urls.map(async (url: any) => {
       console.log("Deleted files are:", url);
 
@@ -85,7 +85,7 @@ export const createPost = async (
       }
     });
 
-    return "Title or content is empty";
+    return "content is empty";
   }
 
   try {
@@ -195,6 +195,12 @@ export const publicPosts = async () => {
       title: true,
       content: true,
       createdAt: true,
+      author: {
+        select: {
+          name: true, // Include the user's name
+          avatar: true, // Include the user's avatar
+        },
+      },
       authorEmail: true,
       public: true,
       media: {
@@ -218,14 +224,14 @@ export const avatarUpload = async (userEmail: string, userAvatar: any) => {
     return false;
   }
 
-  const existingAvatar = await prisma.user.findUnique({
+  const existingAvatar = (await prisma.user.findUnique({
     where: { email: userEmail },
-  });
+  })) as any;
 
   if (existingAvatar) {
     if (
-      typeof existingAvatar == "object" &&
-      Object.keys(existingAvatar).length === 0
+      typeof existingAvatar.avatar == "object" &&
+      Object.keys(existingAvatar.avatar).length === 0
     ) {
       console.log("inside legn");
 

@@ -7,9 +7,12 @@ export default function Explore({ posts }: any) {
   return (
     <div className=" px-10 flex flex-col lg:gap-52 pt-52 gap-32">
       {posts.map((post: any, index: any) => (
-        <div className="flex gap-3 justify-center items-center w-full md:flex-row flex-col explore-card ">
+        <div
+          key={index}
+          className="flex gap-3 justify-center items-center w-full md:flex-row flex-col explore-card "
+        >
           <div className="flex gap-3 justify-center items-center md:order-1 order-2 ">
-            <PublicCard key={index} post={post} />
+            <PublicCard post={post} />
           </div>
           <article className="md:order-2 order-1">
             <div className="flex gap-3 avatar-upload flex-col sm:flex-row">

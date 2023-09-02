@@ -9,9 +9,9 @@ export default function Explore({ posts }: any) {
       {posts.map((post: any, index: any) => (
         <div
           key={index}
-          className="flex gap-3 justify-center items-center w-full md:flex-row flex-col explore-card "
+          className="grid grid-cols-2 gap-3 justify-center items-center w-full md:flex-row flex-col explore-card "
         >
-          <div className="flex gap-3 justify-center items-center md:order-1 order-2 ">
+          <div className="flex gap-3 justify-self-end justify-center items-center md:order-1 order-2 ">
             <PublicCard post={post} />
           </div>
           <article className="md:order-2 order-1">
@@ -23,6 +23,7 @@ export default function Explore({ posts }: any) {
                   className="my-auto sm:self-center self-start sm:max-h[120px] max-h-[80px] max-w-[80px] object-cover object-center"
                   src={post.author.avatar.fileUrl}
                   alt="avatar"
+                  priority={true}
                   style={{
                     width: "100%",
                     height: "100%",
@@ -32,7 +33,7 @@ export default function Explore({ posts }: any) {
                 />
               ) : null}
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 w-full">
                 <h1 className="text-2xl">{post.author.name}</h1>
                 <h2 className="text-xl opacity-80">{post.authorEmail}</h2>
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Footer from "@/components/Footer";
+import Beta from "@/components/Homepage/Beta";
 import Create from "@/components/Homepage/Create";
 import GetStarted from "@/components/Homepage/GetStarted";
 import Introduction from "@/components/Homepage/Introduction";
@@ -32,6 +33,7 @@ export default function Home() {
       <animated.div className="w-full h-full relative flex flex-col lg:gap-0 gap-32 justify-around">
         <Create />
         <Introduction />
+        <Beta />
         <GetStarted />
       </animated.div>
       <Footer />

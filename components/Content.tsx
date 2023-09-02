@@ -24,27 +24,27 @@ export default function Content({ children, session }: any) {
     }, 2000);
   }, []);
   return (
-    <animated.div style={background} className="w-full h-full relative">
-      {killAnimation((style, item) =>
-        item ? (
-          <animated.div
-            className="w-full h-screen absolute top-0 left-0 bg-black z-50 max-w-[100dvw] "
-            style={style}
-          >
-            <div className=" overflow-hidden max-h-screen h-full relative">
-              <div className="absolute border-2 border-white w-[250px] h-[400px] finn "></div>
-              <div className="absolute border-2 border-white w-[250px] h-[400px] jake "></div>
-            </div>
-          </animated.div>
-        ) : (
-          <>
-            <div className="relative top-0 left-0 w-full h-full  ">
-              {children}
-            </div>
-          </>
-        )
-      )}
-    </animated.div>
-    // <div className="relative top-0 left-0 w-full h-full  ">{children}</div>
+    // <animated.div style={background} className="w-full h-full relative">
+    //   {killAnimation((style, item) =>
+    //     item ? (
+    //       <animated.div
+    //         className="w-full h-screen absolute top-0 left-0 bg-black z-50 max-w-[100dvw] "
+    //         style={style}
+    //       >
+    //         <div className=" overflow-hidden max-h-screen h-full relative">
+    //           <div className="absolute border-2 border-white w-[250px] h-[400px] finn "></div>
+    //           <div className="absolute border-2 border-white w-[250px] h-[400px] jake "></div>
+    //         </div>
+    //       </animated.div>
+    //     ) : (
+    //       <>
+    //         <div className="relative top-0 left-0 w-full h-full  ">
+    //           {children}
+    //         </div>
+    //       </>
+    //     )
+    //   )}
+    // </animated.div>
+    <div className="relative top-0 left-0 w-full h-full  ">{children}</div>
   );
 }

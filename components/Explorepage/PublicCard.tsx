@@ -3,8 +3,6 @@ import React from "react";
 import Image from "next/image";
 
 export default function PublicCard({ post }: any) {
-  console.log(post);
-
   return (
     <div className="card w-full sm:max-w-[520px] sm:h-full sm:grid-rows-[500px_auto] grid-rows-[300px_auto]  grid p-3 gap-3">
       {post.media.map((media: any) => (
